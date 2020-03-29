@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="array_them_news">
+        <item>home</item>
+        <item>automobiles</item>
+        <item>business</item>
+        <item>fashion</item>
+        <item>health</item>
+        <item>insider</item>
+        <item>magazine</item>
+        <item>movies</item>
+        <item>politics</item>
+        <item>sports</item>
+        <item>technology</item>
+        <item>travel</item>
+        <item>world</item>
+    </string-array>
+</resources>
