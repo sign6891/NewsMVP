@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
         getNewNews();
     }
-
+    //метод загрузки новостей
     private Object getNewNews() {
 
         RetrofitInstance.getInstance()
