@@ -7,7 +7,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.newsmvp.adapter.NewsAdapter;
 import com.example.newsmvp.model.Multimedium;
@@ -24,11 +29,12 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     private Spinner spinner;
-    private String spinnerName = "";
+    private String spinnerName = "home";
     private static final String API_KEY = "sVNYUCDqQngxDsUy0yfmp3piOCrlWAIg";
     private ArrayList<Result> resultArrayList;
     private RecyclerView recyclerView;
     private NewsAdapter adapter;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +44,37 @@ public class MainActivity extends AppCompatActivity {
         resultArrayList = new ArrayList<>();
 
         spinner = findViewById(R.id.spinner);
-        spinnerName = spinner.getSelectedItem().toString();
+        ArrayAdapter adapterSpinner = ArrayAdapter.createFromResource(this, R.array.array_them_news, R.layout.spinner_item);
+        //adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapterSpinner);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String[] choose = getResources().getStringArray(R.array.array_them_news);
+
+                spinnerName = choose[position];
+                getNewNews();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        //spinnerName = spinner.getSelectedItem().toString();
+        //Log.d("SpinnerNameKey", spinnerName);
+
+        progressBar = findViewById(R.id.progress_bar);
+
         getNewNews();
     }
 
     private Object getNewNews() {
 
         RetrofitInstance.getInstance()
-                .getNewsList(API_KEY)
+                .getNewsList(spinnerName, API_KEY)
                 .enqueue(new Callback<NewsList>() {
                     @Override
                     public void onResponse(Call<NewsList> call, Response<NewsList> response) {
@@ -66,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fillRecyclerView() {
+        progressBar.setVisibility(View.GONE);
         recyclerView = findViewById(R.id.recycler_view);
         adapter = new NewsAdapter(this, resultArrayList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -73,4 +103,5 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
     }
+
 }
