@@ -1,31 +1,23 @@
 package com.example.newsmvp.adapter;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.example.newsmvp.R;
+import com.example.newsmvp.DetailActivity;
 import com.example.newsmvp.model.Result;
 
-import java.io.IOException;
 import java.util.ArrayList;
-
-import static com.example.newsmvp.R.drawable.logo_activity;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder>{
 
@@ -65,8 +57,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         } catch (NullPointerException e) {
             holder.item_image.setImageResource(R.mipmap.logo);
         }
-
-
     }
 
     @Override
@@ -92,6 +82,29 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             item_date = itemView.findViewById(R.id.item_date);
             item_image = itemView.findViewById(R.id.item_image);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+
+                    if (position != RecyclerView.NO_POSITION) {
+                        //Result result = resultArrayList.get(position);
+                        Intent intent = new Intent(context, DetailActivity.class);
+                        intent.putExtra("Title", resultArrayList.get(position).getTitle());
+                        intent.putExtra("Abstract", resultArrayList.get(position).getAbstract());
+                        intent.putExtra("PublishedDate", resultArrayList.get(position).getPublishedDate());
+                        intent.putExtra("UrlWebsite", resultArrayList.get(position).getUrl());
+
+                        try{
+                            intent.putExtra("Url", resultArrayList.get(position).getMultimedia().get(0).getUrl());
+                        } catch (NullPointerException e) {
+                            intent.putExtra("Url", "NonNull");
+                        }
+                        context.startActivity(intent);
+
+                    }
+                }
+            });
         }
     }
 }
