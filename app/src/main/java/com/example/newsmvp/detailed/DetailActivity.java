@@ -1,4 +1,4 @@
-package com.example.newsmvp;
+package com.example.newsmvp.detailed;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,14 +12,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.example.newsmvp.model.Result;
+import com.example.newsmvp.R;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -47,9 +46,6 @@ public class DetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent != null) {
-            // result = (Result)intent.getParcelableExtra("resultNews");
-
-            // if (result != null) {
 
             String preview = intent.getStringExtra("Abstract");
             String title = intent.getStringExtra("Title");
@@ -76,12 +72,12 @@ public class DetailActivity extends AppCompatActivity {
                         })
                         .into(detailImageView);
             } else {
-                detailImageView.setImageResource(R.mipmap.logo  );
+                detailImageView.setImageResource(R.mipmap.logo);
             }
 
             date = date.substring(0, 10);
-            detailDateTextView.setText(date);
 
+            detailDateTextView.setText(date);
             detailTitleTextView.setText(title);
             detailPreviewTextView.setText(preview);
         }
