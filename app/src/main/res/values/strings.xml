@@ -6,4 +6,10 @@
     <string name="title">title</string>
     <string name="preview">preview</string>
     <string name="date">date</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="tap_to_log_in">Tap To Log In</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="password">Password</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
 </resources>

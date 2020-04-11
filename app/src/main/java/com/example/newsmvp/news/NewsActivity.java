@@ -1,24 +1,32 @@
-package com.example.newsmvp;
+package com.example.newsmvp.news;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 
+import com.example.newsmvp.R;
 import com.example.newsmvp.adapter.NewsAdapter;
+import com.example.newsmvp.authentication.AuthenticationActivity;
 import com.example.newsmvp.model.Result;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements NewsView {
+public class NewsActivity extends AppCompatActivity implements NewsView {
 
     private Spinner spinner;
 
@@ -101,5 +109,27 @@ public class MainActivity extends AppCompatActivity implements NewsView {
         //adapter = new NewsAdapter(resultArrayList -> newsPresenter.onNewsSelected(resultArrayList));
         recyclerView.setAdapter(adapter);
         swipeRefreshLayout.setRefreshing(false);
+    }
+
+    //реализация кнопки меню
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            //реализация кнопки меню выхода из аккаунта
+            case R.id.sign_out:
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(NewsActivity.this, AuthenticationActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

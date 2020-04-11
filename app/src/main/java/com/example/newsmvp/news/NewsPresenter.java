@@ -1,10 +1,19 @@
-package com.example.newsmvp;
+package com.example.newsmvp.news;
 
+import android.content.Intent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.newsmvp.R;
+import com.example.newsmvp.authentication.AuthenticationActivity;
 import com.example.newsmvp.model.NewsList;
 import com.example.newsmvp.model.Result;
 import com.example.newsmvp.service.RetrofitInstance;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 

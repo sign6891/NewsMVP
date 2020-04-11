@@ -11,7 +11,6 @@ public interface NewsEndpoint {
 
     //https://api.nytimes.com/svc/topstories/v2/world.json?api-key=sVNYUCDqQngxDsUy0yfmp3piOCrlWAIg
 
-   // @GET("svc/topstories/v2/world.json")
     @GET("svc/topstories/v2/{section}.json?")
     Call<NewsList> getNewsList(@Path("section") String section, @Query("api-key") String apiKey);
 }

@@ -1,20 +1,16 @@
-package com.example.newsmvp;
+package com.example.newsmvp.start_activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.widget.Toast;
 
+import com.example.newsmvp.R;
+import com.example.newsmvp.news.NewsActivity;
 import com.google.android.material.snackbar.Snackbar;
 
-public class LogoActivity extends AppCompatActivity {
-
-    private Context context;
-    private Snackbar snackbar;
+public class StartActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +25,7 @@ public class LogoActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
-                        startActivity(new Intent(LogoActivity.this, MainActivity.class));
+                        startActivity(new Intent(StartActivity.this, NewsActivity.class));
                 }
             }
         };

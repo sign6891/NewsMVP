@@ -20,7 +20,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.newsmvp.R;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity implements DetailView {
 
     private TextView detailDateTextView;
     private TextView detailTitleTextView;
@@ -32,10 +32,14 @@ public class DetailActivity extends AppCompatActivity {
     //private Result result;
     private String urlWebsite;
 
+    private DetailPresenter detailPresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+        detailPresenter = new DetailPresenter(this, this);
 
         detailPreviewTextView = findViewById(R.id.detailPreviewTextView);
         detailTitleTextView = findViewById(R.id.detailTitleTextView);
@@ -53,7 +57,7 @@ public class DetailActivity extends AppCompatActivity {
             urlWebsite = intent.getStringExtra("UrlWebsite");
             String url = intent.getStringExtra("Url");
 
-            if (!url.equals("NonNull")) {
+           /* if (!url.equals("NonNull")) {
 
                 Glide.with(this)
                         .load(url)
@@ -73,11 +77,10 @@ public class DetailActivity extends AppCompatActivity {
                         .into(detailImageView);
             } else {
                 detailImageView.setImageResource(R.mipmap.logo);
-            }
+            }*/
 
-            date = date.substring(0, 10);
-
-            detailDateTextView.setText(date);
+            detailPresenter.loadImage(url, detailImageView);
+            detailDateTextView.setText(detailPresenter.removeDate(date));
             detailTitleTextView.setText(title);
             detailPreviewTextView.setText(preview);
         }
@@ -88,6 +91,9 @@ public class DetailActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(urlWebsite));
         DetailActivity.this.startActivity(intent);
+    }
 
+    public void setProgressBar() {
+        progressBar.setVisibility(View.GONE);
     }
 }
